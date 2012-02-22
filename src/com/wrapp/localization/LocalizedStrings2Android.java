@@ -33,11 +33,18 @@ public class LocalizedStrings2Android {
     }
 
     private void convertLocalizationFile(File localizedStringsFile, File androidOutputStringsFile) {
-      try {
-        InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(localizedStringsFile), "UTF-16");
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        FileOutputStream fileOutputStream = new FileOutputStream(androidOutputStringsFile);
+      InputStreamReader inputStreamReader = null;
+      BufferedReader bufferedReader = null;
+      OutputStreamWriter outputStreamWriter = null;
+      BufferedWriter bufferedWriter = null;
 
+      try {
+        inputStreamReader = new InputStreamReader(new FileInputStream(localizedStringsFile), "UTF-16");
+        bufferedReader = new BufferedReader(inputStreamReader);
+        outputStreamWriter = new OutputStreamWriter(new FileOutputStream(androidOutputStringsFile), "UTF-8");
+        bufferedWriter = new BufferedWriter(outputStreamWriter);
+
+        bufferedWriter.write("<resources>\n");
         boolean inComment = false;
         while(true) {
           String line = bufferedReader.readLine();
@@ -59,8 +66,11 @@ public class LocalizedStrings2Android {
           final String value = lineParts[1].substring(1, lineParts[1].length() - 2);
           final String escapedValueString = value.replace("'", "\\'");
           // Keep the quotes for the key string, though
-          System.out.print("  <string name=" + lineParts[0] + ">" + value + "</string>\n");
+          bufferedWriter.write("  <string name=" + lineParts[0] + ">" + escapedValueString + "</string>\n");
         }
+
+        bufferedWriter.write("</resources>\n");
+        bufferedWriter.flush();
       }
       catch(FileNotFoundException e) {
         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -70,6 +80,24 @@ public class LocalizedStrings2Android {
       }
       catch(IOException e) {
         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+      }
+      finally {
+        try {
+          if(inputStreamReader != null) {
+            inputStreamReader.close();
+          }
+        }
+        catch(IOException e) {
+          e.printStackTrace();
+        }
+        if(outputStreamWriter != null) {
+          try {
+            outputStreamWriter.close();
+          }
+          catch(IOException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
