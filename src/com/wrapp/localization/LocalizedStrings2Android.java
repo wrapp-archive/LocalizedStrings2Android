@@ -10,13 +10,22 @@ public class LocalizedStrings2Android {
       for(String childFile : localizedStringsRootPath.list()) {
         if(childFile.contains(".lproj")) {
           File localeDirectory = new File(localizedStringsRootPath, childFile);
+          File localizedStringsFile = new File(localeDirectory, "Localizable.strings");
+
           final String[] childFileParts = childFile.split("\\.");
           String localeName = childFileParts[0];
-          File localizedStringsFile = new File(localeDirectory, "Localizable.strings");
-          File outputValuesPath = new File(androidProjectResPath, "values-" + localeName);
+          File outputValuesPath;
+          // Slightly special treatment for English, as that should be the fallback language
+          if(localeName.equals("en")) {
+            outputValuesPath = new File(androidProjectResPath, "values");
+          }
+          else {
+            outputValuesPath = new File(androidProjectResPath, "values-" + localeName);
+          }
           if(!outputValuesPath.exists()) {
             outputValuesPath.mkdir();
           }
+
           File androidOutputStringsFile = new File(outputValuesPath, "strings.xml");
           convertLocalizationFile(localizedStringsFile, androidOutputStringsFile);
         }
