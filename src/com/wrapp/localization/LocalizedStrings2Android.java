@@ -112,6 +112,6 @@ public class LocalizedStrings2Android {
   }
 
   private static void printHelp() {
-
+    System.out.println("Usage: LocalizedStrings2Android [Localized Strings Root] [Android Project Root]");
   }
 }
