@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LocalizedStrings2Android:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LocalizedStrings2Android_jar</output-path>
+    <root id="archive" name="LocalizedStrings2Android.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="LocalizedStrings2Android" />
+    </root>
+  </artifact>
+</component>
