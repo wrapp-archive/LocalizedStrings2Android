@@ -73,13 +73,13 @@ public class LocalizedStrings2Android {
         bufferedWriter.flush();
       }
       catch(FileNotFoundException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        e.printStackTrace();
       }
       catch(UnsupportedEncodingException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        e.printStackTrace();
       }
       catch(IOException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        e.printStackTrace();
       }
       finally {
         try {
