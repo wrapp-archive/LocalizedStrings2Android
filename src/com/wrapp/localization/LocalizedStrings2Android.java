@@ -67,8 +67,11 @@ public class LocalizedStrings2Android {
 
         bufferedWriter.write("<resources>\n");
         boolean inComment = false;
+        int lineNumber = 0;
+        int numStringsConverted = 0;
         while(true) {
           String line = bufferedReader.readLine();
+          lineNumber++;
           if(line == null) {
             break;
           }
@@ -88,10 +91,12 @@ public class LocalizedStrings2Android {
           final String escapedValueString = value.replace("'", "\\'");
           // Keep the quotes for the key string, though
           bufferedWriter.write("  <string name=" + lineParts[0] + ">" + escapedValueString + "</string>\n");
+          numStringsConverted++;
         }
 
         bufferedWriter.write("</resources>\n");
         bufferedWriter.flush();
+        System.out.println("Wrote " + numStringsConverted + " strings to " + androidOutputStringsFile.getAbsolutePath());
       }
       catch(FileNotFoundException e) {
         e.printStackTrace();
