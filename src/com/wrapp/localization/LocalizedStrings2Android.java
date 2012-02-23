@@ -88,9 +88,9 @@ public class LocalizedStrings2Android {
           final String[] lineParts = line.split("\\s*=\\s*");
           // Get rid of the first quotation mark, keep everything except the last quote and the semicolon
           final String value = lineParts[1].substring(1, lineParts[1].length() - 2);
-          final String escapedValueString = value.replace("'", "\\'");
+          final String convertedValueString = convertValueString(value);
           // Keep the quotes for the key string, though
-          bufferedWriter.write("  <string name=" + lineParts[0] + ">" + escapedValueString + "</string>\n");
+          bufferedWriter.write("  <string name=" + lineParts[0] + ">" + convertedValueString + "</string>\n");
           numStringsConverted++;
         }
 
@@ -125,6 +125,16 @@ public class LocalizedStrings2Android {
           }
         }
       }
+    }
+
+    private String convertValueString(String value) {
+      return value
+        // Escape single quotes
+        .replace("'", "\\'")
+        // Replace single string
+        .replace("%@", "$1%s")
+        // Replace notation for multiple substrings
+        .replace("$@", "%s");
     }
   }
 
