@@ -55,9 +55,9 @@ public class LocalizedStrings2Android {
 
     private void convertLocalizationFile(File localizedStringsFile, File androidOutputStringsFile) {
       InputStreamReader inputStreamReader = null;
-      BufferedReader bufferedReader = null;
+      BufferedReader bufferedReader;
       OutputStreamWriter outputStreamWriter = null;
-      BufferedWriter bufferedWriter = null;
+      BufferedWriter bufferedWriter;
 
       try {
         inputStreamReader = new InputStreamReader(new FileInputStream(localizedStringsFile), "UTF-16");
