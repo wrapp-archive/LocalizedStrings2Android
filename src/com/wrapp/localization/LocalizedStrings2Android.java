@@ -85,7 +85,7 @@ public class LocalizedStrings2Android {
           if(inComment || line.length() == 0) {
             continue;
           }
-          final String[] lineParts = line.split("\\s=\\s");
+          final String[] lineParts = line.split("\\s*=\\s*");
           // Get rid of the first quotation mark, keep everything except the last quote and the semicolon
           final String value = lineParts[1].substring(1, lineParts[1].length() - 2);
           final String escapedValueString = value.replace("'", "\\'");
