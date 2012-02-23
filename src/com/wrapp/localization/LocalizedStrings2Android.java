@@ -86,6 +86,10 @@ public class LocalizedStrings2Android {
             continue;
           }
           final String[] lineParts = line.split("\\s*=\\s*");
+          if(lineParts.length != 2) {
+            System.out.println(localizedStringsFile.getAbsolutePath() + ":" + lineNumber + ":Could not parse line contents '" + line + "'");
+            continue;
+          }
           // Get rid of the first quotation mark, keep everything except the last quote and the semicolon
           final String value = lineParts[1].substring(1, lineParts[1].length() - 2);
           final String convertedValueString = convertValueString(value);
