@@ -172,6 +172,8 @@ public class LocalizedStrings2Android {
         .replace("'", "\\'")
         // Replace single string
         .replace("%@", "$1%s")
+        // Replace ampersands
+        .replace("&", "&amp;")
         // Replace notation for multiple substrings
         .replace("$@", "$s");
     }
