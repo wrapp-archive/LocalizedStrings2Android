@@ -173,7 +173,15 @@ public class LocalizedStrings2Android {
         // Replace single string
         .replace("%@", "$1%s")
         // Replace notation for multiple substrings
-        .replace("$@", "%s");
+        .replace("$@", "$s");
+    }
+
+    private boolean isValidKeyString(String key) {
+      return key.matches("[A-Za-z0-9_]+");
+    }
+
+    private boolean valueStringHasNamedParameters(String valueString) {
+      return valueString.matches(".*%\\{[A-Za-z0-9_]+\\}.*");
     }
   }
 
