@@ -103,14 +103,25 @@ public class LocalizedStrings2Android {
           }
           final String[] lineParts = line.split("\\s*=\\s*");
           if(lineParts.length != 2) {
-            System.out.println(localizedStringsFile.getAbsolutePath() + ":" + lineNumber + ":Could not parse line contents '" + line + "'");
+            System.err.println(localizedStringsFile.getAbsolutePath() + ":" + lineNumber + ":Could not parse line contents '" + line + "'");
+            continue;
+          }
+          final String keyString = lineParts[0].substring(1, lineParts[0].length() - 1);
+          final String convertedKeyString = convertKeyString(keyString);
+          if(!isValidKeyString(convertedKeyString)) {
+            System.err.println(localizedStringsFile.getAbsolutePath() + ":" + lineNumber + ":Invalid key string '" + convertedKeyString + "'");
             continue;
           }
           // Get rid of the first quotation mark, keep everything except the last quote and the semicolon
           final String value = lineParts[1].substring(1, lineParts[1].length() - 2);
           final String convertedValueString = convertValueString(value);
-          // Keep the quotes for the key string, though
-          bufferedWriter.write("  <string name=" + lineParts[0] + ">" + convertedValueString + "</string>\n");
+          final boolean skipStringFormatting = valueStringHasNamedParameters(convertedValueString);
+          if(skipStringFormatting) {
+            bufferedWriter.write("  <string name=\"" + convertedKeyString + "\" formatted=\"false\">" + convertedValueString + "</string>\n");
+          }
+          else {
+            bufferedWriter.write("  <string name=\"" + convertedKeyString + "\">" + convertedValueString + "</string>\n");
+          }
           numStringsConverted++;
         }
 
