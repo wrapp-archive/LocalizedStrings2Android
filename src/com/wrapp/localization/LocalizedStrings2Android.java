@@ -158,6 +158,14 @@ public class LocalizedStrings2Android {
       }
     }
 
+    private String convertKeyString(String keyString) {
+      return keyString
+        // Replace dots with underscores
+        .replace(".", "_")
+        // Same with spaces
+        .replace(" ", "_");
+    }
+
     private String convertValueString(String value) {
       return value
         // Escape single quotes
