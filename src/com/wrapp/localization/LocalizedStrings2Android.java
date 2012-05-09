@@ -28,13 +28,11 @@ public class LocalizedStrings2Android {
     public void convertLocalizationFiles(String localizedStringsRoot, String androidProjectRoot) {
       File androidProjectResPath = new File(new File(androidProjectRoot), "res");
       File localizedStringsRootPath = new File(localizedStringsRoot);
-      for(String childFile : localizedStringsRootPath.list()) {
-        if(childFile.contains(".lproj")) {
-          File localeDirectory = new File(localizedStringsRootPath, childFile);
-          File localizedStringsFile = new File(localeDirectory, "Localizable.strings");
-
-          final String[] childFileParts = childFile.split("\\.");
-          String localeName = childFileParts[0];
+      for(String childLocaleFilename : localizedStringsRootPath.list()) {
+        if(childLocaleFilename.contains(".lproj")) {
+          File localeDirectory = new File(localizedStringsRootPath, childLocaleFilename);
+          final String[] childLocaleFilenameParts = childLocaleFilename.split("\\.");
+          String localeName = childLocaleFilenameParts[0];
           File outputValuesPath;
           // Slightly special treatment for English, as that should be the fallback language
           if(localeName.equals("en")) {
@@ -47,8 +45,26 @@ public class LocalizedStrings2Android {
             outputValuesPath.mkdir();
           }
 
-          File androidOutputStringsFile = new File(outputValuesPath, "strings.xml");
-          convertLocalizationFile(localizedStringsFile, androidOutputStringsFile);
+          for(String childFile : localeDirectory.list()) {
+            final String childFileParts[] = childFile.split("\\.");
+            String extension = childFileParts[1];
+            if(extension.equals("strings")) {
+              String inputFilename = childFileParts[0];
+              String outputFilename;
+              if(inputFilename.equals("Localizable")) {
+                outputFilename = "strings";
+              }
+              else {
+                outputFilename = inputFilename.toLowerCase();
+              }
+              File localizedStringsFile = new File(localeDirectory, childFile);
+              File androidOutputStringsFile = new File(outputValuesPath, outputFilename + ".xml");
+              convertLocalizationFile(localizedStringsFile, androidOutputStringsFile);
+            }
+            else {
+              // Unknown type, skip
+            }
+          }
         }
       }
     }
