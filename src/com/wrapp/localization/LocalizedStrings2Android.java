@@ -179,7 +179,7 @@ public class LocalizedStrings2Android {
     }
 
     private boolean isValidKeyString(String key) {
-      return key.matches("[A-Za-z0-9_]+");
+      return key.matches("[A-Za-z_][A-Za-z0-9_]+");
     }
 
     private boolean valueStringHasNamedParameters(String valueString) {
