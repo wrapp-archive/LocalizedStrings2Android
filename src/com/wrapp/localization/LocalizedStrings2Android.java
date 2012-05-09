@@ -76,7 +76,7 @@ public class LocalizedStrings2Android {
       BufferedWriter bufferedWriter;
 
       try {
-        inputStreamReader = new InputStreamReader(new FileInputStream(localizedStringsFile), "UTF-16");
+        inputStreamReader = new InputStreamReader(new FileInputStream(localizedStringsFile), "UTF-8");
         bufferedReader = new BufferedReader(inputStreamReader);
         outputStreamWriter = new OutputStreamWriter(new FileOutputStream(androidOutputStringsFile), "UTF-8");
         bufferedWriter = new BufferedWriter(outputStreamWriter);
