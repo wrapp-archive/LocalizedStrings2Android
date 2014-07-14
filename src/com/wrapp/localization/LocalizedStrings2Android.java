@@ -52,7 +52,7 @@ public class LocalizedStrings2Android {
               String inputFilename = childFileParts[0];
               String outputFilename;
               if(inputFilename.equals("Localizable")) {
-                outputFilename = "strings";
+                outputFilename = "webtranslated";
               }
               else {
                 outputFilename = inputFilename.toLowerCase();
@@ -81,6 +81,7 @@ public class LocalizedStrings2Android {
         outputStreamWriter = new OutputStreamWriter(new FileOutputStream(androidOutputStringsFile), "UTF-8");
         bufferedWriter = new BufferedWriter(outputStreamWriter);
 
+        bufferedWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n");
         bufferedWriter.write("<resources>\n");
         boolean inComment = false;
         int lineNumber = 0;
@@ -117,10 +118,10 @@ public class LocalizedStrings2Android {
           final String convertedValueString = convertValueString(value);
           final boolean skipStringFormatting = valueStringHasNamedParameters(convertedValueString);
           if(skipStringFormatting) {
-            bufferedWriter.write("  <string name=\"" + convertedKeyString + "\" formatted=\"false\">" + convertedValueString + "</string>\n");
+            bufferedWriter.write("    <string name=\"" + convertedKeyString + "\" formatted=\"false\">" + convertedValueString + "</string>\n");
           }
           else {
-            bufferedWriter.write("  <string name=\"" + convertedKeyString + "\">" + convertedValueString + "</string>\n");
+            bufferedWriter.write("    <string name=\"" + convertedKeyString + "\">" + convertedValueString + "</string>\n");
           }
           numStringsConverted++;
         }
